@@ -13,7 +13,7 @@ class TeamController extends Controller
    */
   public function showAllTeams()
   {
-      return response()->json(Team::all());
+    return response()->json(Team::all());
   }
 
   /**
@@ -23,7 +23,7 @@ class TeamController extends Controller
   */
   public function showOneTeam($id)
   {
-      return response()->json(Team::find($id));
+    return response()->json(Team::find($id));
   }
 
   /**
@@ -33,9 +33,16 @@ class TeamController extends Controller
   */
   public function create(Request $request)
   {
-      $team = Team::create($request->all());
+    $this->validate($request, [
+      'name' => 'required',
+      'logo' => 'required',
+      'division' => 'required',
+      'wins' => 'required',
+      'loses' => 'required',
+    ]);
+    $team = Team::create($request->all());
 
-      return response()->json($team, 201);
+    return response()->json($team, 201);
   }
 
   /**
@@ -45,10 +52,10 @@ class TeamController extends Controller
   */
   public function update($id, Request $request)
   {
-      $team = Team::findOrFail($id);
-      $team->update($request->all());
+    $team = Team::findOrFail($id);
+    $team->update($request->all());
 
-      return response()->json($team, 200);
+    return response()->json($team, 200);
   }
 
   /**
@@ -57,8 +64,8 @@ class TeamController extends Controller
   * return: Delete Message
   */
   public function delete($id)
-  {
-      Team::findOrFail($id)->delete();
-      return response('Team was Successfully Deleted!', 200);
+  { 
+    Team::findOrFail($id)->delete();
+    return response('Team was Successfully Deleted!', 200);
   }
 }
