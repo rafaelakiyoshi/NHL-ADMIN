@@ -1,0 +1,94 @@
+[
+  {
+    "name": "Carolina Hurricanes", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-12-light.svg", 
+    "division": "Metropolitan",
+    "wins": 8,
+    "loses": 2
+  },
+  {
+    "name": "Columbus Blue Jackets", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-29-dark.svg", 
+    "division": "Metropolitan",
+    "wins": 7,
+    "loses": 3
+  },
+  {
+    "name": "New Jersey Devils", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-1-light.svg", 
+    "division": "Metropolitan",
+    "wins": 6,
+    "loses": 4
+  },
+
+
+  {
+    "name": "Boston Bruins", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-6-light.svg", 
+    "division": "Atlantic",
+    "wins": 8,
+    "loses": 2
+  },
+  {
+    "name": "Buffalo Sabres", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-7-light.svg", 
+    "division": "Atlantic",
+    "wins": 9,
+    "loses": 1
+  },
+  {
+    "name": "Detroit Red Wings", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-17-light.svg", 
+    "division": "Atlantic",
+    "wins": 3,
+    "loses": 7
+  },
+
+
+  {
+    "name": "Chicago Blackhawks", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-16-dark.svg", 
+    "division": "Central",
+    "wins": 7,
+    "loses": 3
+  },
+  {
+    "name": "Colorado Avalanche", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-21-dark.svg", 
+    "division": "Central",
+    "wins": 8,
+    "loses": 2
+  },
+  {
+    "name": "Winnipeg Jets", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-52-dark.svg", 
+    "division": "Central",
+    "wins": 9,
+    "loses": 1
+  },
+
+
+  
+  {
+    "name": "Anaheim Ducks", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-24-light.svg", 
+    "division": "Pacific",
+    "wins": 6,
+    "loses": 4
+  },
+  {
+    "name": "Arizona Coyotes", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-53-light.svg", 
+    "division": "Pacific",
+    "wins": 7,
+    "loses": 3
+  },
+  {
+    "name": "Calgary Flames", 
+    "logo": "https://www-league.nhlstatic.com/nhl.com/builds/site-core/45ef03dd6ab1bf4c6cfab84b4bdd9e027695d3c8_1527190895/images/logos/team/current/team-20-secondary-dark.svg", 
+    "division": "Pacific",
+    "wins": 4,
+    "loses": 6
+  }
+  
+]
