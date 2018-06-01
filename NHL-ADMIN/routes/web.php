@@ -17,19 +17,37 @@ $router->get('/', function () use ($router) {
 
 
 /**
- * This router group is about the whole admin about teams data
- * All methods needed about teams (Create, Update, Delete and Visualize)
+ * This router group is about the whole admin about TEAMS data
+ * All methods needed about TEAMS (Create, Update, Delete and Visualize)
  */
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->get('teams',  ['uses' => 'TeamController@showAllTeams']);
   
-    $router->get('teams/{id}', ['uses' => 'TeamController@showOneAuthor']);
+    $router->get('teams/{id}', ['uses' => 'TeamController@showOneTeam']);
   
     $router->post('teams', ['uses' => 'TeamController@create']);
   
     $router->delete('teams/{id}', ['uses' => 'TeamController@delete']);
   
     $router->put('teams/{id}', ['uses' => 'TeamController@update']);
+
+  });
+
+/**
+ * This router group is about the whole admin about GAMES data
+ * All methods needed about GAMES (Create, Update, Delete and Visualize)
+ */
+$router->group(['prefix' => 'api'], function () use ($router) {
+
+    $router->get('games',  ['uses' => 'GameController@showAllGames']);
+  
+    $router->get('games/{id}', ['uses' => 'GameController@showOneGame']);
+  
+    $router->post('games', ['uses' => 'GameController@create']);
+  
+    $router->delete('games/{id}', ['uses' => 'GameController@delete']);
+  
+    $router->put('games/{id}', ['uses' => 'GameController@update']);
 
   });
