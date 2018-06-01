@@ -33,6 +33,7 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->put('teams/{id}', ['uses' => 'TeamController@update']);
 
   });
+  
 
 /**
  * This router group is about the whole admin about GAMES data
