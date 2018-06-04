@@ -7,9 +7,13 @@ export const store = new Vuex.Store({
   state: {
     games: [],
     teams: [],
-    update: false
+    update: false,
+    teamDetail: {}
   },
   getters: {
+    getTeamDetail: state => {
+      return state.teamDetail
+    },
     getTeams: state => {
       return state.teams
     },
@@ -21,6 +25,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    setTeamDetail: (state, teamDetail) => {
+      state.teamDetail = teamDetail
+    },
     setTeams: (state, teams) => {
       state.teams = teams
     },

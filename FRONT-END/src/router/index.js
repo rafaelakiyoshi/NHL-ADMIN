@@ -9,6 +9,7 @@ import Dashboard from '@/views/Dashboard'
 
 import Teams from '@/views/Teams'
 import Games from '@/views/Games'
+import TeamDetail from '@/views/TeamDetail'
 
 // Views - Pages
 import Page404 from '@/views/pages/Page404'
@@ -43,6 +44,11 @@ export default new Router({
           path: 'games',
           name: 'Games',
           component: Games
+        },
+        {
+          path: 'teamdetail',
+          name: 'Teamdetail',
+          component: TeamDetail
         }
       ]},
     {

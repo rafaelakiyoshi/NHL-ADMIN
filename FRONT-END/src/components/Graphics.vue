@@ -216,7 +216,6 @@ export default {
     //   return str.replace('2009/', ')
     // })
     let gamesDataWithoutModification = []
-    console.log('aaaaaaaaaaaaaaaa', this.games)
     for (var x in this.games) {
       let gameInfo = {
         date: this.games[x].game_date,
@@ -247,7 +246,6 @@ export default {
       }
     }
     for (var info in gamesDataWithoutModification) {
-        console.log(gamesDataWithoutModification)
       this.games_date.push(gamesDataWithoutModification[info].date)
       this.games_watched.push(gamesDataWithoutModification[info].watched)
       this.number_games.push(gamesDataWithoutModification[info].games)

@@ -6,7 +6,7 @@
         <div class="col">
           <lastgames></lastgames>
         </div>
-        <div class="col-5">
+        <div class="col">
           <ranking></ranking>
         </div>
       </div>
