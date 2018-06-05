@@ -28,11 +28,11 @@ export default {
   data () {
     return {
       myChart: null,
-        games: [],
-        games_watched: [],
-        games_date: [],
-        number_games: [],
-        teams: [],
+      games: [],
+      games_watched: [],
+      games_date: [],
+      number_games: [],
+      teams: [],
       option: {
         title: {
           text: 'NHL Games Tracking',
@@ -95,31 +95,21 @@ export default {
             type: 'category',
             boundaryGap: false,
             axisLine: { onZero: true },
-            data: [
-              '2009/10/1 4:00',
-              '2009/10/1 5:00',
-              '2009/10/1 6:00',
-              '2009/10/1 7:00'
-            ]
+            data: []
           },
           {
             gridIndex: 1,
             type: 'category',
             boundaryGap: false,
             axisLine: { onZero: true },
-            data: [
-              '2009/10/1 4:00',
-              '2009/10/1 5:00',
-              '2009/10/1 6:00',
-              '2009/10/1 7:00'
-            ],
+            data: [],
             position: 'top'
           }
         ],
         yAxis: [
           {
             name: 'Peoples Watching',
-            type: 'value',
+            type: 'value'
           },
           {
             gridIndex: 1,
@@ -134,7 +124,7 @@ export default {
             type: 'line',
             symbolSize: 8,
             hoverAnimation: false,
-            data: [0, 1, 2, 3]
+            data: []
           },
           {
             name: 'Number of Games',
@@ -143,7 +133,7 @@ export default {
             yAxisIndex: 1,
             symbolSize: 8,
             hoverAnimation: false,
-            data: [2, 4, 6, 8]
+            data: []
           }
         ]
       }
@@ -152,46 +142,46 @@ export default {
   methods: {
     setGraphic () {
       let gamesDataWithoutModification = []
-    for (var x in this.games) {
-      let gameInfo = {
-        date: this.games[x].game_date,
-        watched: this.games[x].watched,
-        games: 1
+      for (var x in this.games) {
+        let gameInfo = {
+          date: this.games[x].game_date,
+          watched: this.games[x].watched,
+          games: 1
+        }
+        gamesDataWithoutModification.push(gameInfo)
       }
-      gamesDataWithoutModification.push(gameInfo)
-    }
-    gamesDataWithoutModification.sort(function (a, b) {
-      // Turn your strings into dates, and then subtract them
-      // to get a value that is either negative, positive, or zero.
-      return new Date(b.date) - new Date(a.date)
-    })
+      gamesDataWithoutModification.sort(function (a, b) {
+        // Turn your strings into dates, and then subtract them
+        // to get a value that is either negative, positive, or zero.
+        return new Date(b.date) - new Date(a.date)
+      })
 
-    for (var k = 0; k <= gamesDataWithoutModification.length; k++) {
-      for (var p = k; p <= gamesDataWithoutModification.length; p++) {
-        try {
-          if (
-            gamesDataWithoutModification[k].date ===
-            gamesDataWithoutModification[p].date
-          ) {
-            gamesDataWithoutModification[k].games++
-            gamesDataWithoutModification[k].watched +=
-              gamesDataWithoutModification[p].watched
-            gamesDataWithoutModification.splice([p], 1)
-          }
-        } catch (e) {}
+      for (var k = 0; k <= gamesDataWithoutModification.length; k++) {
+        for (var p = k; p <= gamesDataWithoutModification.length; p++) {
+          try {
+            if (
+              gamesDataWithoutModification[k].date ===
+              gamesDataWithoutModification[p].date
+            ) {
+              gamesDataWithoutModification[k].games++
+              gamesDataWithoutModification[k].watched +=
+                gamesDataWithoutModification[p].watched
+              gamesDataWithoutModification.splice([p], 1)
+            }
+          } catch (e) {}
+        }
       }
-    }
-    for (var info in gamesDataWithoutModification) {
-      this.games_date.push(gamesDataWithoutModification[info].date)
-      this.games_watched.push(gamesDataWithoutModification[info].watched)
-      this.number_games.push(gamesDataWithoutModification[info].games)
-    }
-    this.option.series[0].data = this.games_watched
-    this.option.series[1].data = this.number_games
-    this.option.xAxis[0].data = this.games_date
-    this.option.xAxis[1].data = this.games_date
-    this.myChart = echarts.init(document.getElementById('main'))
-    this.myChart.setOption(this.option)
+      for (var info in gamesDataWithoutModification) {
+        this.games_date.push(gamesDataWithoutModification[info].date)
+        this.games_watched.push(gamesDataWithoutModification[info].watched)
+        this.number_games.push(gamesDataWithoutModification[info].games)
+      }
+      this.option.series[0].data = this.games_watched
+      this.option.series[1].data = this.number_games
+      this.option.xAxis[0].data = this.games_date
+      this.option.xAxis[1].data = this.games_date
+      this.myChart = echarts.init(document.getElementById('main'))
+      this.myChart.setOption(this.option)
     }
   },
   mounted () {
@@ -224,9 +214,6 @@ export default {
           // error callback
         }
       )
-      
-      
-      
     } else {
       console.log('The Data already are in VueX')
       // The Data already are in VueX
