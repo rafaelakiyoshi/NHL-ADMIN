@@ -2,7 +2,10 @@
   <div id="ranking">
     <div class="list-group">
       <h3>Ranking</h3>
-      <button v-for="(team, index) in teams" v-bind:key="team.id" type="button" class="list-group-item list-group-item-action">
+      <button 
+        v-for="(team, index) in teamsToShow" v-bind:key="team.id" type="button" 
+        class="list-group-item list-group-item-action" 
+        @click="routeForTeam(team)" >
         <div class="row">
           <div class="col">
           <h4 class="inline">{{index+1}}º - </h4>
@@ -22,15 +25,54 @@
         </div>
       </button>
     </div>
+    <b-pagination align="center" :total-rows="totalLength" v-model="currentPage" :per-page="perPage">
+    </b-pagination>
   </div>
 </template>
 <script>
+import teamdetail from '../views/TeamDetail.vue'
 export default {
   name: 'ranking',
+  components: {
+    teamdetail
+  },
   data () {
     return {
       games: [],
-      teams: []
+      teams: [],
+      teamsSorted: [],
+      teamsToShow: [],
+      currentPage: 0,
+      perPage: 10,
+      oldCurrentPage: 0,
+      totalLength: 0
+    }
+  },
+  watch: {
+    currentPage: function(){
+      let x = this.teamsSorted
+      let start
+      let end
+      if(this.currentPage == 1){
+        start = this.currentPage
+        end = this.currentPage * this.perPage
+        console.log('PAGINATION', start, end)
+      } else if(this.currentPage > this.oldCurrentPage) {
+        start = this.currentPage * this.perPage - (this.perPage -1)
+        end = this.currentPage * this.perPage
+        console.log('PAGINATION', start, end)
+      } else {
+        start = this.currentPage * this.perPage
+        end = this.currentPage * this.perPage - (this.perPage -1)
+        console.log('PAGINATION', start, end)
+      }
+      this.teamsToShow = x.slice(start-1, end)
+    }
+  },
+  methods: {
+    routeForTeam (team) {
+      this.$store.commit('setTeamDetail', team)
+      this.$router.push('teamdetail')
     }
   },
   mounted () {
@@ -41,7 +83,11 @@ export default {
       // get body data
         this.$store.commit('setTeams', response.body)
         this.teams = response.body
-        this.teams.sort((a, b) => parseFloat(b.wins) - parseFloat(a.wins))
+        let sorted = this.teams
+        this.teamsSorted = sorted.sort((a, b) => parseFloat(b.wins) - parseFloat(a.wins))
+        this.totalLength = this.teams.length
+        let x = this.teams
+        this.teamsToShow = x.slice(0, 10)
       }, response => {
       // error callback
       })
@@ -57,6 +103,11 @@ export default {
       console.log('The Data already are in VueX')
       this.games = this.$store.getters.getGames
       this.teams = this.$store.getters.getTeams
+      let sorted = this.teams
+      this.teamsSorted = sorted.sort((a, b) => parseFloat(b.wins) - parseFloat(a.wins))
+      this.totalLength = this.teams.length
+      let x = this.teams
+      this.teamsToShow = x.slice(0, 10)
     }
   }
 }

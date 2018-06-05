@@ -18,35 +18,6 @@
         </b-col>
       </b-row>
       <div id="main" style="width: 100%; height:550px;"></div>
-      <!-- <div slot="footer">
-        <b-row class="text-center">
-          <b-col class="mb-sm-2 mb-0">
-            <div class="text-muted">Visits</div>
-            <strong>29.703 Users (40%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="success" :value="40"></b-progress>
-          </b-col>
-          <b-col class="mb-sm-2 mb-0 d-md-down-none">
-            <div class="text-muted">Unique</div>
-            <strong>24.093 Users (20%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="info" :value="20"></b-progress>
-          </b-col>
-          <b-col class="mb-sm-2 mb-0">
-            <div class="text-muted">Pageviews</div>
-            <strong>78.706 Views (60%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="warning" :value="60"></b-progress>
-          </b-col>
-          <b-col class="mb-sm-2 mb-0">
-            <div class="text-muted">New Users</div>
-            <strong>22.123 Users (80%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" variant="danger" :value="80"></b-progress>
-          </b-col>
-          <b-col class="mb-sm-2 mb-0 d-md-down-none">
-            <div class="text-muted">Bounce Rate</div>
-            <strong>Average Rate (40.15%)</strong>
-            <b-progress height={} class="progress-xs mt-2" :precision="1" :value="40"></b-progress>
-          </b-col>
-        </b-row>
-      </div> -->
     </b-card>
   </div>
 </template>
@@ -178,44 +149,9 @@ export default {
       }
     }
   },
-  mounted () {
-    // Checking if the data already are in VueX or if there's any update to do.
-    if (
-      this.$store.getters.getTeams.length === 0 ||
-      this.$store.getters.getGames.length === 0
-    ) {
-      console.log('Catching the Data')
-      this.$http.get('http://nhl.admin/api/teams').then(
-        response => {
-          // get body data
-          this.$store.commit('setTeams', response.body)
-          this.teams = response.body
-        },
-        response => {
-          // error callback
-        }
-      )
-
-      this.$http.get('http://nhl.admin/api/games').then(
-        response => {
-          // get body data
-          this.$store.commit('setGames', response.body)
-          this.games = response.body
-        },
-        response => {
-          // error callback
-        }
-      )
-    } else {
-      console.log('The Data already are in VueX')
-      // The Data already are in VueX
-      this.games = this.$store.getters.getGames
-      this.teams = this.$store.getters.getTeams
-    }
-    // this.timeData = this.timeData.map(function(str) {
-    //   return str.replace('2009/', ')
-    // })
-    let gamesDataWithoutModification = []
+  methods: {
+    setGraphic () {
+      let gamesDataWithoutModification = []
     for (var x in this.games) {
       let gameInfo = {
         date: this.games[x].game_date,
@@ -256,6 +192,51 @@ export default {
     this.option.xAxis[1].data = this.games_date
     this.myChart = echarts.init(document.getElementById('main'))
     this.myChart.setOption(this.option)
+    }
+  },
+  mounted () {
+    // Checking if the data already are in VueX or if there's any update to do.
+    if (
+      this.$store.getters.getTeams.length === 0 ||
+      this.$store.getters.getGames.length === 0
+    ) {
+      console.log('Catching the Data')
+      this.$http.get('http://nhl.admin/api/teams').then(
+        response => {
+          // get body data
+          this.$store.commit('setTeams', response.body)
+          this.teams = response.body
+          this.setGraphic()
+        },
+        response => {
+          // error callback
+        }
+      )
+
+      this.$http.get('http://nhl.admin/api/games').then(
+        response => {
+          // get body data
+          this.$store.commit('setGames', response.body)
+          this.games = response.body
+          this.setGraphic()
+        },
+        response => {
+          // error callback
+        }
+      )
+      
+      
+      
+    } else {
+      console.log('The Data already are in VueX')
+      // The Data already are in VueX
+      this.games = this.$store.getters.getGames
+      this.teams = this.$store.getters.getTeams
+      this.setGraphic()
+    }
+    // this.timeData = this.timeData.map(function(str) {
+    //   return str.replace('2009/', ')
+    // })
   }
 }
 </script>
