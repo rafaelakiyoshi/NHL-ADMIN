@@ -11,7 +11,7 @@ class GameTest extends TestCase
     // A test to verify if /api/games endpoint is returning all Games available.
     public function testGetAllGames()
     {
-        $this->get('/api/games');
+        $this->get('/api/gamesWithoutSort');
 
         $this->assertEquals(Game::all(), $this->response->getContent()
         );
