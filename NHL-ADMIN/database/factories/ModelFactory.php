@@ -26,7 +26,7 @@ $factory->define(App\Game::class, function (Faker\Generator $faker) {
         'id_team2' => rand(1, 12),
         'score_team1' => rand(1, 10),
         'score_team2' => rand(1, 10),
-        'game_date' => "".rand(1, 30)."-06-2018",
+        'game_date' => $faker->dateTimeThisMonth()->format('Y-m-d'),
         'watched' => rand(500, 10000),
     ];
 });
