@@ -66,8 +66,10 @@ export default {
   methods: {
     routeForTeam (team) {
       this.$store.commit('setTeamDetail', team)
-      this.$router.push({name: 'Teamdetail', params: {team, games: this.games}})
-      
+      this.$router.push({
+        name: 'Teamdetail',
+        params: { team, games: this.games }
+      })
     }
   },
   mounted () {
@@ -76,7 +78,6 @@ export default {
       this.$store.getters.getTeams.length === 0 ||
       this.$store.getters.getGames.length === 0
     ) {
-      console.log('Catching the Data')
       this.$http.get('http://nhl.admin/api/teams').then(
         response => {
           // get body data
@@ -104,7 +105,6 @@ export default {
         }
       )
     } else {
-      console.log('The Data already are in VueX')
       this.games = this.$store.getters.getGames
       this.teams = this.$store.getters.getTeams
       let sorted = this.teams

@@ -84,8 +84,6 @@ export default {
           }
           this.myChart = echarts.init(document.getElementById('scoresGraph'))
           this.myChart.setOption(this.option)
-
-          console.log(this.games)
         },
         response => {
           // error callback

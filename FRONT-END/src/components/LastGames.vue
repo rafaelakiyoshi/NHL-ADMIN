@@ -60,19 +60,25 @@ export default {
   methods: {
     routeToDetail (game) {
       this.$http
-      .get(
-        `http://nhl.admin/api/teamsGames/${game.id_team1}/${game.id_team2}`
-      )
-      .then(
-        response => {
-          // get body data
-          this.$router.push({name: 'Gamedetail', params: {game: response.body, allGames: this.games, allTeams: this.teams}})
-        },
-        response => {
-          // error callback
-        }
-      )
-      
+        .get(
+          `http://nhl.admin/api/teamsGames/${game.id_team1}/${game.id_team2}`
+        )
+        .then(
+          response => {
+            // get body data
+            this.$router.push({
+              name: 'Gamedetail',
+              params: {
+                game: response.body,
+                allGames: this.games,
+                allTeams: this.teams
+              }
+            })
+          },
+          response => {
+            // error callback
+          }
+        )
     }
   },
   mounted () {
@@ -96,11 +102,7 @@ export default {
         response => {
           // get body data
           this.games = response.body
-          // this.games = this.games.sort(function (a, b) {
-          //   // Turn your strings into dates, and then subtract them
-          //   // to get a value that is either negative, positive, or zero.
-          //   return new Date(b.date) - new Date(a.date)
-          // })
+          this.games.reverse()
           this.totalLength = this.games.length
           let x = this.games
           this.gamesToShow = x.slice(0, 10)
@@ -108,6 +110,7 @@ export default {
             this.gamesToShow = this.specificGames
             let x = this.specificGames
             this.gamesToShow = x.slice(0, 5)
+            this.gamesToShow.reverse()
             // this.totalLength = 10
             this.perPage = 5
           }
@@ -125,15 +128,9 @@ export default {
       this.gamesToShow = x.slice(0, 50)
     }
     if (this.specificGames) {
-      console.log('GAMES RECEBIDOS: ', this.specificGames)
-      // this.teams.sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
       this.gamesToShow = this.specificGames
-      console.log('GAMES RECEBIDOS: ', this.specificGames, this.specificGames.length, this.gamesToShow)
-      
       let x = this.specificGames
       this.gamesToShow = x
-      // .slice(0, 5)
-      // this.totalLength = 10
       this.perPage = 5
     }
   }

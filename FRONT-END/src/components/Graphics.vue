@@ -30,7 +30,6 @@ export default {
       option: {
         title: {
           text: 'NHL Games Tracking',
-          subtext: '',
           x: 'center'
         },
         tooltip: {
@@ -144,26 +143,19 @@ export default {
         }
         gamesDataWithoutModification.push(gameInfo)
       }
-      // gamesDataWithoutModification.sort(function (a, b) {
-      //   // Turn your strings into dates, and then subtract them
-      //   // to get a value that is either negative, positive, or zero.
-      //   return new Date(b.date) - new Date(a.date)
-      // })
 
       for (var k = 0; k <= gamesDataWithoutModification.length; k++) {
-        for (var p = k; p <= gamesDataWithoutModification.length; p++) {
-          try {
-            if (
-              gamesDataWithoutModification[k].date ===
-              gamesDataWithoutModification[p].date
-            ) {
-              gamesDataWithoutModification[k].games++
-              gamesDataWithoutModification[k].watched +=
-                gamesDataWithoutModification[p].watched
-              gamesDataWithoutModification.splice([p], 1)
-            }
-          } catch (e) {}
-        }
+        try {
+          if (
+            gamesDataWithoutModification[k].date ===
+            gamesDataWithoutModification[k + 1].date
+          ) {
+            gamesDataWithoutModification[k + 1].games++
+            gamesDataWithoutModification[k + 1].watched +=
+              gamesDataWithoutModification[k].watched
+            delete gamesDataWithoutModification[k]
+          }
+        } catch (e) {}
       }
       for (var info in gamesDataWithoutModification) {
         this.games_date.push(gamesDataWithoutModification[info].date)
@@ -184,7 +176,6 @@ export default {
       this.$store.getters.getTeams.length === 0 ||
       this.$store.getters.getGames.length === 0
     ) {
-      console.log('Catching the Data')
       this.$http.get('http://nhl.admin/api/teams').then(
         response => {
           // get body data
@@ -207,7 +198,6 @@ export default {
         }
       )
     } else {
-      console.log('The Data already are in VueX UHHUUUU')
       // The Data already are in VueX
       this.games = this.$store.getters.getGames
       this.teams = this.$store.getters.getTeams

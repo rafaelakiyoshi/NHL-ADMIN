@@ -76,8 +76,6 @@ export default {
             document.getElementById('visualizationsGraph')
           )
           this.myChart.setOption(this.option)
-
-          console.log(this.games)
         },
         response => {
           // error callback
