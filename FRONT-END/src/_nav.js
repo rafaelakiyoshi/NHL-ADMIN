@@ -6,12 +6,7 @@ export default {
       icon: 'icon-speedometer'
     },
     {
-      name: 'Teams',
-      url: '/teams',
-      icon: 'icon-people'
-    },
-    {
-      name: 'Games',
+      name: 'New Games',
       url: '/games',
       icon: 'icon-globe'
     }

@@ -2,10 +2,7 @@
   <div id="ranking">
     <div class="list-group">
       <h3>Ranking</h3>
-      <button 
-        v-for="(team, index) in teamsToShow" v-bind:key="team.id" type="button" 
-        class="list-group-item list-group-item-action" 
-        @click="routeForTeam(team)" >
+      <button v-for="(team, index) in teamsToShow" v-bind:key="team.id" type="button" class="list-group-item list-group-item-action"  @click="routeForTeam(team)" >
         <div class="row">
           <div class="col">
           <h4 class="inline">{{index+1}}º - </h4>
@@ -49,62 +46,71 @@ export default {
     }
   },
   watch: {
-    currentPage: function(){
+    currentPage: function () {
       let x = this.teamsSorted
       let start
       let end
-      if(this.currentPage == 1){
+      if (this.currentPage === 1) {
         start = this.currentPage
         end = this.currentPage * this.perPage
-        console.log('PAGINATION', start, end)
-      } else if(this.currentPage > this.oldCurrentPage) {
-        start = this.currentPage * this.perPage - (this.perPage -1)
+      } else if (this.currentPage > this.oldCurrentPage) {
+        start = this.currentPage * this.perPage - (this.perPage - 1)
         end = this.currentPage * this.perPage
-        console.log('PAGINATION', start, end)
       } else {
         start = this.currentPage * this.perPage
-        end = this.currentPage * this.perPage - (this.perPage -1)
-        console.log('PAGINATION', start, end)
+        end = this.currentPage * this.perPage - (this.perPage - 1)
       }
-      this.teamsToShow = x.slice(start-1, end)
+      this.teamsToShow = x.slice(start - 1, end)
     }
   },
   methods: {
     routeForTeam (team) {
       this.$store.commit('setTeamDetail', team)
-      this.$router.push('teamdetail')
+      this.$router.push({name: 'Teamdetail', params: {team, games: this.games}})
+      
     }
   },
   mounted () {
     // Checking if the data already are in VueX or if there's any update to do.
-    if ((this.$store.getters.getTeams.length === 0 || this.$store.getters.getGames.length === 0)) {
+    if (
+      this.$store.getters.getTeams.length === 0 ||
+      this.$store.getters.getGames.length === 0
+    ) {
       console.log('Catching the Data')
-      this.$http.get('http://nhl.admin/api/teams').then(response => {
-      // get body data
-        this.$store.commit('setTeams', response.body)
-        this.teams = response.body
-        let sorted = this.teams
-        this.teamsSorted = sorted.sort((a, b) => parseFloat(b.wins) - parseFloat(a.wins))
-        this.totalLength = this.teams.length
-        let x = this.teams
-        this.teamsToShow = x.slice(0, 10)
-      }, response => {
-      // error callback
-      })
+      this.$http.get('http://nhl.admin/api/teams').then(
+        response => {
+          // get body data
+          this.teams = response.body
+          let sorted = this.teams
+          this.teamsSorted = sorted.sort(
+            (a, b) => parseFloat(b.wins) - parseFloat(a.wins)
+          )
+          this.totalLength = this.teams.length
+          let x = this.teams
+          this.teamsToShow = x.slice(0, 10)
+        },
+        response => {
+          // error callback
+        }
+      )
 
-      this.$http.get('http://nhl.admin/api/games').then(response => {
-      // get body data
-        this.$store.commit('setGames', response.body)
-        this.games = response.body
-      }, response => {
-      // error callback
-      })
+      this.$http.get('http://nhl.admin/api/games').then(
+        response => {
+          // get body data
+          this.games = response.body
+        },
+        response => {
+          // error callback
+        }
+      )
     } else {
       console.log('The Data already are in VueX')
       this.games = this.$store.getters.getGames
       this.teams = this.$store.getters.getTeams
       let sorted = this.teams
-      this.teamsSorted = sorted.sort((a, b) => parseFloat(b.wins) - parseFloat(a.wins))
+      this.teamsSorted = sorted.sort(
+        (a, b) => parseFloat(b.wins) - parseFloat(a.wins)
+      )
       this.totalLength = this.teams.length
       let x = this.teams
       this.teamsToShow = x.slice(0, 10)
@@ -117,7 +123,7 @@ export default {
   display: inline;
   font-weight: bold;
 }
-.center{
+.center {
   text-align: center;
 }
 </style>

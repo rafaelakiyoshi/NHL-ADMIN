@@ -8,13 +8,6 @@
         </b-col>
         <b-col sm="7" class="d-none d-md-block">
           <b-button type="button" variant="primary" class="float-right"><i class="icon-cloud-download"></i></b-button>
-          <b-button-toolbar class="float-right" aria-label="Toolbar with buttons group">
-            <b-form-radio-group class="mr-3" id="radiosBtn" buttons button-variant="outline-secondary" name="radiosBtn">
-              <b-form-radio class="mx-0" value="Day">Day</b-form-radio>
-              <b-form-radio class="mx-0" value="Month">Month</b-form-radio>
-              <b-form-radio class="mx-0" value="Year">Year</b-form-radio>
-            </b-form-radio-group>
-          </b-button-toolbar>
         </b-col>
       </b-row>
       <div id="main" style="width: 100%; height:550px;"></div>
@@ -25,6 +18,7 @@
 import echarts from 'echarts'
 export default {
   name: 'graphics',
+  props: ['gamesProps'],
   data () {
     return {
       myChart: null,
@@ -150,11 +144,11 @@ export default {
         }
         gamesDataWithoutModification.push(gameInfo)
       }
-      gamesDataWithoutModification.sort(function (a, b) {
-        // Turn your strings into dates, and then subtract them
-        // to get a value that is either negative, positive, or zero.
-        return new Date(b.date) - new Date(a.date)
-      })
+      // gamesDataWithoutModification.sort(function (a, b) {
+      //   // Turn your strings into dates, and then subtract them
+      //   // to get a value that is either negative, positive, or zero.
+      //   return new Date(b.date) - new Date(a.date)
+      // })
 
       for (var k = 0; k <= gamesDataWithoutModification.length; k++) {
         for (var p = k; p <= gamesDataWithoutModification.length; p++) {
@@ -194,7 +188,6 @@ export default {
       this.$http.get('http://nhl.admin/api/teams').then(
         response => {
           // get body data
-          this.$store.commit('setTeams', response.body)
           this.teams = response.body
           this.setGraphic()
         },
@@ -206,7 +199,6 @@ export default {
       this.$http.get('http://nhl.admin/api/games').then(
         response => {
           // get body data
-          this.$store.commit('setGames', response.body)
           this.games = response.body
           this.setGraphic()
         },
@@ -215,7 +207,7 @@ export default {
         }
       )
     } else {
-      console.log('The Data already are in VueX')
+      console.log('The Data already are in VueX UHHUUUU')
       // The Data already are in VueX
       this.games = this.$store.getters.getGames
       this.teams = this.$store.getters.getTeams

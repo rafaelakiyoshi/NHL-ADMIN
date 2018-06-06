@@ -9,7 +9,6 @@
       <SidebarToggler class="d-md-down-none" display="lg" />
       <b-navbar-nav class="ml-auto">
       </b-navbar-nav>
-      <AsideToggler class="d-none d-lg-block" />
       <!--<AsideToggler class="d-lg-none" mobile />-->
     </AppHeader>
     <div class="app-body">

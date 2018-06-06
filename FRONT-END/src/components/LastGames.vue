@@ -2,7 +2,7 @@
   <div id="lastgames">
     <div class="list-group">
       <h3>{{ title }}</h3>
-      <button v-for="(game) in gamesToShow" v-bind:key="game.id" type="button" class="list-group-item list-group-item-action">
+      <button v-for="(game) in gamesToShow" v-bind:key="game.id" @click="routeToDetail(game)" type="button" class="list-group-item list-group-item-action">
       <div class="row">
         <div class="col left">
          <img class="inline" v-bind:src="teams[game.id_team1-1].logo" width="50" height="50"/>
@@ -13,13 +13,12 @@
        <h5 class="inline">{{ game.score_team1 }}</h5> VS <h5 class="inline">{{ game.score_team2 }}</h5>
         </div>
         <div class="col right">
-           {{ game.id_team2 }}
           <h6 class="inline">{{teams[game.id_team2-1].name}}</h6>
           <img class="inline" v-bind:src="teams[game.id_team2-1].logo" width="50" height="50"/>
         </div>
       </div>
       </button>
-      <b-pagination align="center" :total-rows="totalLength" v-model="currentPage" :per-page="perPage">
+      <b-pagination v-if="!specificGames" align="center" :total-rows="totalLength" v-model="currentPage" :per-page="perPage">
     </b-pagination>
     </div>
   </div>
@@ -41,62 +40,101 @@ export default {
     }
   },
   watch: {
-    currentPage: function(){
+    currentPage: function () {
       let x = this.games
       let start
       let end
-      if(this.currentPage == 1){
+      if (this.currentPage === 1) {
         start = this.currentPage
         end = this.currentPage * this.perPage
-      } else if(this.currentPage > this.oldCurrentPage) {
-        start = this.currentPage * this.perPage - (this.perPage -1)
+      } else if (this.currentPage > this.oldCurrentPage) {
+        start = this.currentPage * this.perPage - (this.perPage - 1)
         end = this.currentPage * this.perPage
       } else {
         start = this.currentPage * this.perPage
-        end = this.currentPage * this.perPage - (this.perPage -1)
+        end = this.currentPage * this.perPage - (this.perPage - 1)
       }
-      this.gamesToShow = x.slice(start-1, end)
+      this.gamesToShow = x.slice(start - 1, end)
+    }
+  },
+  methods: {
+    routeToDetail (game) {
+      this.$http
+      .get(
+        `http://nhl.admin/api/teamsGames/${game.id_team1}/${game.id_team2}`
+      )
+      .then(
+        response => {
+          // get body data
+          this.$router.push({name: 'Gamedetail', params: {game: response.body, allGames: this.games, allTeams: this.teams}})
+        },
+        response => {
+          // error callback
+        }
+      )
+      
     }
   },
   mounted () {
-        // Checking if the data already are in VueX or if there's any update to do.
-      if ((this.$store.getters.getTeams.length === 0 || this.$store.getters.getGames.length === 0)) {
-        this.$http.get('http://nhl.admin/api/teams').then(response => {
-        // get body data
-          this.$store.commit('setTeams', response.body)
+    // Checking if the data already are in VueX or if there's any update to do.
+    if (
+      this.$store.getters.getTeams.length === 0 ||
+      this.$store.getters.getGames.length === 0
+    ) {
+      this.$http.get('http://nhl.admin/api/teams').then(
+        response => {
+          // get body data
           this.teams = response.body
           this.teams.sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
-        }, response => {
-        // error callback
-        })
+        },
+        response => {
+          // error callback
+        }
+      )
 
-        this.$http.get('http://nhl.admin/api/games').then(response => {
-        // get body data
-          this.$store.commit('setGames', response.body)
+      this.$http.get('http://nhl.admin/api/games').then(
+        response => {
+          // get body data
           this.games = response.body
+          // this.games = this.games.sort(function (a, b) {
+          //   // Turn your strings into dates, and then subtract them
+          //   // to get a value that is either negative, positive, or zero.
+          //   return new Date(b.date) - new Date(a.date)
+          // })
           this.totalLength = this.games.length
           let x = this.games
           this.gamesToShow = x.slice(0, 10)
-        }, response => {
-        // error callback
-        })
-      } else {
-        // The Data already are in VueX
-        this.games = this.$store.getters.getGames
-        this.teams = this.$store.getters.getTeams
-        this.totalLength = this.games.length
-        let x = this.games
-        this.gamesToShow = x.slice(0, 10)
-      }
-    if(this.specificGames){
-        this.teams.sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
-        console.log(this.teams)
-        console.log(this.specificGames, this.specificGames.length)
-        this.games = this.specificGames
-        let x = this.specificGames
-        this.gamesToShow = x.slice(0, 5)
-        this.totalLength = 10
-        this.perPage = 5
+          if (this.specificGames) {
+            this.gamesToShow = this.specificGames
+            let x = this.specificGames
+            this.gamesToShow = x.slice(0, 5)
+            // this.totalLength = 10
+            this.perPage = 5
+          }
+        },
+        response => {
+          // error callback
+        }
+      )
+    } else {
+      // The Data already are in VueX
+      this.games = this.$store.getters.getGames
+      this.teams = this.$store.getters.getTeams
+      this.totalLength = this.games.length
+      let x = this.games
+      this.gamesToShow = x.slice(0, 50)
+    }
+    if (this.specificGames) {
+      console.log('GAMES RECEBIDOS: ', this.specificGames)
+      // this.teams.sort((a, b) => parseFloat(a.id) - parseFloat(b.id))
+      this.gamesToShow = this.specificGames
+      console.log('GAMES RECEBIDOS: ', this.specificGames, this.specificGames.length, this.gamesToShow)
+      
+      let x = this.specificGames
+      this.gamesToShow = x
+      // .slice(0, 5)
+      // this.totalLength = 10
+      this.perPage = 5
     }
   }
 }
@@ -110,7 +148,7 @@ export default {
   text-align: center;
 }
 
-.padding-right{
+.padding-right {
   padding-right: 10px;
 }
 

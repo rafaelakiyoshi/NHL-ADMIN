@@ -5,12 +5,16 @@ Vue.use(Vuex)
 
 export const store = new Vuex.Store({
   state: {
+    gameDetail: {},
     games: [],
+    teamDetail: {},
     teams: [],
-    update: false,
-    teamDetail: {}
+    update: false
   },
   getters: {
+    getGameDetail: state => {
+      return state.gameDetail
+    },
     getTeamDetail: state => {
       return state.teamDetail
     },
@@ -25,6 +29,9 @@ export const store = new Vuex.Store({
     }
   },
   mutations: {
+    setGameDetail: (state, gameDetail) => {
+      state.gameDetail = gameDetail
+    },
     setTeamDetail: (state, teamDetail) => {
       state.teamDetail = teamDetail
     },

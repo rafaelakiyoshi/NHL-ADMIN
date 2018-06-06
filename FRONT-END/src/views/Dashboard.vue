@@ -22,15 +22,6 @@ export default {
     graphics: Graphics,
     lastgames: LastGames,
     ranking: Ranking
-  },
-  data () {
-    return {
-    }
-  },
-  methods: {
-  },
-  mounted () {
-    
   }
 }
 </script>
