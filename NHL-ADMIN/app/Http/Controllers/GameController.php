@@ -7,11 +7,30 @@ use Illuminate\Http\Request;
 
 class GameController extends Controller
 {
+
+  public function showAllTeamsGames($id, $id2)
+  {
+    return response()->json(app('db')
+      ->select("SELECT * FROM games 
+        where id_team1 = $id and id_team2 = $id2 
+        or id_team2 = $id and id_team1 = $id2
+        ORDER BY game_date ASC"));
+  }
+
+  public function showAllTeamGames($id)
+  {
+    return response()->json(app('db')->select("SELECT * FROM games where id_team1 = $id or id_team2 = $id ORDER BY game_date ASC"));
+  }
   /**
    * It should return all Games existing in database
    * return: Json with all Games as objects
    */
   public function showAllGames()
+  {
+    return response()->json(app('db')->select("SELECT * FROM games ORDER BY game_date ASC"));
+  }
+
+  public function showAllGamesWithoutSort()
   {
     return response()->json(Game::all());
   }
