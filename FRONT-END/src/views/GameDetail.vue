@@ -168,7 +168,9 @@ a {
   width: 100%;
 }
 
-.demo-3 a {
-  margin-top: -50px;
+.demo-3 {
+  a {
+    margin-top: -50px;
+  }
 }
 </style>
