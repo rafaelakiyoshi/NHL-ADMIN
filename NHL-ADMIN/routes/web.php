@@ -42,6 +42,8 @@ $router->group(['prefix' => 'api'], function () use ($router) {
 $router->group(['prefix' => 'api'], function () use ($router) {
 
     $router->get('games',  ['uses' => 'GameController@showAllGames']);
+
+    $router->get('gamesWithoutSort',  ['uses' => 'GameController@showAllGamesWithoutSort']);
   
     $router->get('games/{id}', ['uses' => 'GameController@showOneGame']);
   
@@ -50,5 +52,9 @@ $router->group(['prefix' => 'api'], function () use ($router) {
     $router->delete('games/{id}', ['uses' => 'GameController@delete']);
   
     $router->put('games/{id}', ['uses' => 'GameController@update']);
+
+    $router->get('teamGames/{id}', ['uses' => 'GameController@showAllTeamGames']);
+
+    $router->get('teamsGames/{id}/{id2}', ['uses' => 'GameController@showAllTeamsGames']);
 
   });
